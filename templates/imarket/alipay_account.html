@@ -1,0 +1,28 @@
+{% extends "imarket/base.html" %} {% block container %}
+<script type="text/javascript">
+$(document).ready(function() {
+    var apa = "{{alipayAccount}}";
+    if (apa){
+        $('#formap input').attr('disabled','disabled').removeAttr('class');
+     }
+});
+function modify(){
+	$('#formap input').removeAttr('disabled');
+	$('#alipayAccount').focus();
+	$('#addApBtn').attr('class', 'btn');
+	return false;
+}
+</script>
+<div id="container">
+{% include "imarket/include/left.html" %}
+<div id="center">
+<form action="?cmd=alipay" id='formap' method="post">
+<div class=stsT><p>你的支付宝账户
+<p><input type="text" name='alipayAccount' id='alipayAccount' value="{{alipayAccount}}" width="50"> <span><a href="modify" onclick="return modify()">修改</a></span>
+<p><input type="submit" value="添加/修改 支付宝账户" id=addApBtn class="btn"><span class="remark">绝对安全保密，放心填写，不会向您索要密码</span>
+</div>
+</form>
+</div>
+{% include "imarket/include/right.html" %}
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "imarket/base.html" %} {% block container %}
+<div id="container">
+<div id="center">
+{% for taobaoke_item in taobaoke_items %}
+	<div class=item>
+		<div><a href="{{taobaoke_item.click_url}}" target="_blank"><div class=iimg><img class=small2big alt="{{taobaoke_item.title}}" src="{{taobaoke_item.pic_url}}"></div></a></div>
+		<div class=itxt><span><a href="{{taobaoke_item.click_url}}">{{taobaoke_item.title|safe}}</a></span></div>
+		<div class=sendt><span>￥:{{taobaoke_item.price}}</span><span><a href="?type=tbkItems&cmd=delete&brand={{brand}}&key={{taobaoke_item.key}}" class='delete'>删除</a></span>
+		<span><a href="?type=tbkItems&cmd=modify&brand={{brand}}&key={{taobaoke_item.key}}">修改</a></span></div>
+	</div>
+{% endfor %}
+<div class=clear>
+<hr>
+<h1>BRAND:{{brand}}</h1>
+<form action="?type=tbkItems&cmd=put&brand={{brand}}" method="post" id="form1" name="edit"><ul>
+<input type="hidden" name="key" value="{{taobaoke_item.key}}" />
+<li><span class=column>num_iid:</span><input type="text" name="num_iid" value="{{taobaoke_item.num_iid}}"/></li>
+<li><span class=column>click_url:</span><input type="text" name="click_url" value="{{taobaoke_item.click_url}}" size="120"/></li>
+<li><span class=column>title:</span><input type="text" name="title" value="{{taobaoke_item.title}}" width="200" size="120"/></li>
+<li><span class=column>pic_url:</span><input type="text" name="pic_url" value="{{taobaoke_item.pic_url}}" size="120"/></li>
+<li><span class=column>price:</span><input type="text" name="price" value="{{taobaoke_item.price}}"/></li>
+<li><span class=column>channel:</span><input type="text" name="channel" value="{{taobaoke_item.channel|default:brand|default:""}}"/></li>
+<li><span class=column>&nbsp;</span><input type="submit" name="submit" value="插入或更新一条淘宝客商品" /></li></ul>
+</form>
+</div>
+</div>
+</div>
+{% endblock %}

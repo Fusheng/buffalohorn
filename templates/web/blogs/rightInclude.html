@@ -1,0 +1,24 @@
+
+<br>
+{% include "common/siteSearch.html" %}
+<br>
+<div id=tags>
+	<ul>
+	<div class=tagCat>For Money</div>
+	{% for key, value in session.tags.items %}
+	<li><a href="?cmd=view&tag={{key}}">{{key}}</a>&nbsp;({{value}})</li>
+	{% endfor %}
+	<br>
+	<div class=tagCat>Technical</div>
+	{% for key, value in session.techTags.items %}
+	<li><a href="?cmd=view&tag={{key}}">{{key}}</a>&nbsp;({{value}})</li>
+	{% endfor %}
+	<br>
+	<div class=tagCat>Miscellaneous</div>
+	{% for key, value in session.psnlTags.items %}
+	<li><a href="?cmd=view&tag={{key}}">{{key}}</a>&nbsp;({{value}})</li>
+	{% endfor %}
+	</ul>
+</div>
+<div class=utilLinks><a href="?">博客首页</a></div>
+<div id=taobaoke class=clear>{% include "common/taobaoke_promotion.html" %}</div>

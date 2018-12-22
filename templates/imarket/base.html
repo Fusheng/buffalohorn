@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- IMarket模板的父模板 -->
+<head>
+{% block headMeta %}{% include "imarket/include/headMeta.html" %}{% endblock %}
+<title>{% block title %}三鸟网络科技 Triplebirds{% endblock %}</title>
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#deleteDialog").dialog({
+      autoOpen: false,
+      modal: true,
+	  show: 'slide'
+    });
+	
+  $("a.delete").click(function(e) {
+    e.preventDefault();
+    var targetUrl = $(this).attr("href");
+	$("#deleteDialog").dialog({
+      buttons : {
+	        "Confirm" : function() {
+	          window.location.href = targetUrl;
+	        },
+	        "Cancel" : function() {
+	          $(this).dialog("close");
+	        }
+	  }
+    });
+	$("#deleteDialog").dialog("open");
+	return false;
+  });
+});
+</script>
+</head>
+<body>
+<div id="deleteDialog" title="您真的要删除吗？" style="display: none;">您确定要删除吗?删除后不可恢复</div>
+{% block header %}{% include "imarket/include/header.html" %}{% endblock %}
+{% block container %}{% endblock %}
+{% block foooter %}{% include "footer.html" %}{% endblock %}
+</body>
+</html>

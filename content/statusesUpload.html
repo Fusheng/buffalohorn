@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
+<html> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="/css/web.css">
+<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/sunny/jquery-ui.css"> 
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script> 
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script> 
+<script src="/js/imarket.js" type="text/javascript"></script> 
+<style type="text/css"> 
+#center p{font-size: 1.2em;}
+#left{height: 200px;}
+</style> 
+<title>Luckymkt</title> 
+</head> 
+<body> 
+<div id="header"> 
+<div id=hL><a href="/imarket/index"><img src="/images/logo.png"/></a></div> 
+</div> 
+<div id="container"> 
+<form name="uploadForm" method="POST" 
+action="http://api.t.sina.com.cn/statuses/upload.xml"
+enctype="multipart/form-data" > 
+<input type="text" name="status" value="" /><br>
+<input type="file" name="pic" value="浏览文件" /><br>
+<input type="hidden" name="source" value="1203585864" />
+<input type="submit" value="发微博"/>
+</form> 
+</div> 
+<div id="footer"> 
+<span style="vertical-align: top;"><a style="vertical-align: top;" href="/content/links.html">links</a>&nbsp;|&nbsp;©2009 Bufferlo Horn Technologies</span> 
+<img width="60" height="15" src="/images/appengine.jpeg" alt="Powered by Google App Engine" />
+</div> 
+</body>
+</html>

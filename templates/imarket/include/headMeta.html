@@ -1,0 +1,19 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="/css/imarket.css">
+
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.4.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jqueryui/1.8.9/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://libs.baidu.com/jqueryui/1.8.9/themes/sunny/jquery-ui.css">
+
+<script type="text/javascript" src="/js/imarket.js" ></script>
+{% include "common/siteAnalytics.html" %}
+<script type="text/javascript">
+$(document).ready(function(){
+	if ($.browser.msie) {
+		$.getScript("/js/jquery.corner.js", function(){
+		   $('#center').corner("15px");
+		   $('#header').corner("15px");
+		 });
+	}
+})
+</script>

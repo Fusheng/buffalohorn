@@ -1,0 +1,14 @@
+{% extends "imarket/base.html" %} {% block container %}
+<div id="container">
+<div id="center">
+<form action="?cmd=promotionMails" method="post" id="form1" ><ul>
+<li><span class=column>文章ID:</span><input type="text" name="article_id"/></li>
+<li><span class=column>收件人:</span>
+<textarea name='to' cols="70" rows="10"></textarea>
+</li>
+<li><span class=column>&nbsp;</span><input type="submit" name="submit" value="Send" /></li></ul>
+</form>
+</div>
+</div>
+</div>
+{% endblock %}

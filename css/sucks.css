@@ -1,0 +1,18 @@
+* {margin: 0;padding: 0;}
+table {width: 100%;border-collapse: collapse;}
+/* Zebra striping */
+tr:nth-of-type(odd) {background: #eee;}
+th {background: #fff2b2;font-weight: bold;}
+td, th {
+    padding: 6px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+body{margin: 3px;}
+
+.clr{width:100%; clear:both; display:block;}
+.lft{float:left; width: 80%; display: table-cell;}
+.rgt{float:right;}
+
+#spn1,#spn2{width:35%;}

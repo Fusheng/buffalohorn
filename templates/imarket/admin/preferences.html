@@ -1,0 +1,31 @@
+{% extends "imarket/base.html" %} {% block container %}
+<div id="container">
+<div id="center">
+
+{% if pref_type == 'INDEX_SLIDES' %}
+<h1>首页幻灯片管理</h1>
+<ol>
+{% for preference in preferences %}
+	<li><span>链接地址：{{preference.pref_link_url}}</span>
+	<span><a href="?type=preferences&pref_type=INDEX_SLIDES&cmd=modify&key={{preference.key}}">修改</a></span>
+	<span><a href="?type=preferences&pref_type=INDEX_SLIDES&cmd=delete&key={{preference.key}}" class='delete'>删除</a></span></li>
+{% endfor %}
+</ol>
+<div class=clear>
+<hr>
+<span>首页幻灯片最多7个</span>
+<form action="?type=preferences&pref_type=INDEX_SLIDES&cmd=put" method="post" id="form1" ><ul>
+<input type="hidden" name="key" value="{{preference.key}}" /></li>
+<li><span class=column>Pref 类型</span><input type="text" name="pref_type" value="{{pref_type}}" />
+<li><span class=column>链接地址:</span><input type="text" name="pref_link_url" value="{{preference.pref_link_url}}" size="200"/></li>
+<li><span class=column>图片地址:</span><input type="text" name="pref_img_url" value="{{preference.pref_img_url}}" size="200"/></li>
+<li><span class=column>链接文字:</span><input type="text" name="pref_link_text" value="{{preference.pref_link_text}}" size="60"/></li>
+<li><span class=column>链接title:</span><input type="text" name="pref_link_title" value="{{preference.pref_link_title}}" size="60"/></li>
+<li><span class=column>&nbsp;</span><input type="submit" name="submit" value="插入或更新一个幻灯片" /></li></ul>
+</form>
+</div>
+{% endif %}
+
+</div>
+</div>
+{% endblock %}

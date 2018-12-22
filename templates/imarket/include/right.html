@@ -1,0 +1,57 @@
+<div id="dialog" title="您真的要解除绑定吗？" style="display: none;">
+  您要解除绑定吗?这不大好唉
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#dialog").dialog({
+      autoOpen: false,
+      modal: true,
+	  show: 'slide'
+    });
+	
+  $("#unbind").click(function(e) {
+    e.preventDefault();
+    var targetUrl = $(this).attr("href");
+	$("#dialog").dialog({
+      buttons : {
+	        "Confirm" : function() {
+	          window.location.href = targetUrl;
+	        },
+	        "Cancel" : function() {
+	          $(this).dialog("close");
+	        }
+	  }
+    });
+	$("#dialog").dialog("open");
+	return false;
+  });
+  
+});
+</script>
+<div id="right">
+{% block weiboAccount %}
+{% comment %}
+{% if session.tUser %}
+	<!-- <p><img alt="{{nick}}的大头贴" title={{nick}} src="{{avatar}}"/></p>  -->
+	<div class=ttl>微博帐号信息：</div>
+	<div class=cnt><div class=pflimg><img alt="{{session.tUser.nick}}" title="{{session.tUser.nick}}" src="{{session.tUser.profile_image_url}}"></div>
+		<div class="pfltxt"><span><a href="http://t.sina.com.cn/{{session.tUser.outer_id}}">{{session.tUser.nick}}</a></span></div><br>
+		<div class="pfltxt"><span><a href="http://t.sina.com.cn/{{session.tUser.outer_id}}/fans">粉丝&nbsp;{{session.tUser.followers_count}}</a></span></div><br>
+		<div class="pfltxt"><span><a href="http://t.sina.com.cn/{{session.tUser.outer_id}}/profile">微博&nbsp;{{session.tUser.statuses_count}}</a></span></div>
+	</div>
+	<div class=clear><a id=unbind href="/imarket/t?command=unbind">解除绑定</a></div>
+{% else %}
+	<p class=bind><a href="/imarket/authorizeSinaT">绑定新浪微博</a><br>
+{% endif %}
+{% endcomment %}
+{% endblock weiboAccount %}
+{% block alipayAccount %}
+	{% comment %}
+		<a href="/imarket?cmd=alipay" title="需首先绑定新浪微博">支付宝账户</a><br><br>
+	{% endcomment %}
+{% endblock alipayAccount %}
+{% block otherContent %}{% endblock otherContent %}
+{% block taobaokePromotion %}
+	<div id=taobaoke class=clear>{% include "common/taobaoke_promotion.html" %}</div>
+{% endblock taobaokePromotion %}
+</div>

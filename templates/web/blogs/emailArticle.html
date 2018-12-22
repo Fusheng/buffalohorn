@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>文章电邮给您的朋友</title>
+{% include "web/headMeta.html" %}
+<style> .i{width:240px;}</style>
+</head>
+<body>
+<script>
+shortcut.add("Ctrl+return",articlrPost);
+function email(){
+	if($("#to").val().length<1){
+		$("#warning").html("");
+		$("#warning").append("Email address can not be null").addClass("warnMessage");
+		return false;
+	}
+	if(!isValidEmailAddress($("#to").val())){
+		$("#warning").html("");
+		$("#warning").append("输入一个正确的EMail吧，这样您的朋友才能收到哦,,,").addClass("warnMessage");
+		return false;
+		};
+	$("#sub").attr("disabled","disabled").attr("value","Emailing");
+	document.postform.submit();
+}
+</script>
+<div id="maxw">
+<div id="leftpart">
+<form action="#"  name="postform" onSubmit="return email();" method="post">
+	<p class="post_page">Your friend's email address:
+		<div id="warning"></div>
+  		<input type="text" name="to" id="to" class="i"  value="" /><br>
+  	<p><input type="submit" id=sub value='Email this blog to your friend'>
+</form>
+</div>
+<div id="rightpart">
+{% include "web/blogs/rightInclude.html" %}
+</div>
+{% include "footer.html" %}
+</div><!-- end  maxw  -->
+</body>
+</html>

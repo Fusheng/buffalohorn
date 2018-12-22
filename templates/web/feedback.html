@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>FeedBack</title>
+{% include "web/headMeta.html" %}
+</head>
+<body>
+<div id="maxw">
+<div id="leftpart">
+	<br><span class="title">非常感谢您给我们反馈</span><br>
+	<form action="/feedback" method="post">
+		<p><textarea rows="8" cols="100" name="content"></textarea>
+		<p><input type="text" name="email"/>您的Email(可不填, 严格保密,我们会以最快的速度给您回复)
+		<p><input type="submit" value="提交反馈意见">
+	</form>
+</div>
+<div id="rightpart">
+</div>
+{% include "footer.html" %}
+</div><!-- end  maxw  -->
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en	">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="/css/web.css">
+{% include "common/headMeta.html" %}
+<title>Information</title>
+<style type="text/css">
+body {	background: #fff;	font: 80% arial;	margin: 2em;}
+a img {	border: none;}
+</style>
+<script>
+$(document).ready(function(){
+	var cntnue='{{request.GET.continue}}';
+	if (cntnue){
+		$('#continueLink').attr('href', cntnue);
+		$('#continueLink').text('返回先前页面');
+	}
+})
+</script>
+</head>
+<body>
+<div id="header"><a href="/" id="logo"> <img src="/images/logo.png"/> </a></div>
+<div id="content">
+<div style="margin:100px auto; width:350px;"> 
+  <ul style="margin-left:40px; list-style-type:none; list-style-image: none; list-style-position:outside;"> 
+    <li style="list-style-type:none; list-style-image:none; list-style-position:outside; font-size:14px; line-height: 32px;">{{message}}</li> 
+    <li style="list-style-type:none; list-style-image:none; list-style-position:outside; color:#666;">&nbsp;</li> 
+    <li style="list-style-type:none; list-style-image:none; list-style-position:outside; color:#666;"> &gt; <span id="f3s">2</span>秒后 <a href="/" id=continueLink>返回首页</a> 
+<script type="text/javascript"> 
+(function(){var secs=2,si=setInterval(function(){if(--secs){
+    $('#f3s').text(secs);
+}else{
+	var cntnue='{{request.GET.continue}}';
+	if (cntnue){
+		location.href=cntnue;
+		clearInterval(si);
+	}else{
+    	location.href="/";clearInterval(si);
+	}
+}}, 1000)})();
+</script> 
+ </li> 
+  </ul> 
+</div> 
+</div>{% include "footer.html" %}
+</body>
+</html>

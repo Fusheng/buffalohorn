@@ -1,0 +1,5 @@
+cron:
+- description: "fetch bank steel daily transaction volume"
+  url: /data/job/bsdtv
+  schedule: every 90 minutes from 20:00 to 22:00
+  timezone: Asia/Shanghai

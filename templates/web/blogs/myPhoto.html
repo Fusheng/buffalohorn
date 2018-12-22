@@ -1,0 +1,10 @@
+<script type="text/javascript">
+function setDefaultImg(obj){
+	//var imgE = document.getElementById('handsome');
+	obj.src='/images/kickTheWall.jpg';
+	obj.title='Please kick the wall!';
+}
+</script>
+<div><a href="{{photo_link_url}}" target="_blank" title="Fution Photos">
+	<img src="{{photo_url}}" width="182" alt="Fution" id=handsome onerror="setDefaultImg(this)" /></a>
+</div>

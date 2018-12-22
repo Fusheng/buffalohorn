@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+{% include "imarket/include/headMeta.html" %}
+<style type="text/css">
+</style>
+<title>Market Assistance</title>
+<script type="text/javascript">
+$(document).ready(function(){
+	var tUserName = '{{session.tUser.nick}}';
+	if(!tUserName){
+		$('#tbk2t').attr('title','绑定微博后方可发送');
+		$('#tbk2t').attr('disabled','disabled');
+	}
+});
+
+function sendTBK(){
+	var checkedTbks = '';
+	var chks =  $("#form1 input:checkbox");
+	$.each(chks, function(index, value){
+		if($(value).attr("checked")==true){
+			checkedTbks = checkedTbks + $(value).attr('name')+','; 
+		}
+	});
+	if(checkedTbks){
+		var input = $("<input>").attr("type", "hidden").attr("name", "checkedTbks").val(checkedTbks);
+		$('#form1').append($(input));
+		return true;
+	}
+	return false;
+}
+
+function pgnClk(action){
+	var page_no = {{page_no}};
+	if (action == 'next'){
+		page_no = page_no +1;
+	}else if(action == 'prev'){
+		if(page_no>=2){
+			page_no = page_no -1;
+		}else{
+			$('a #pp').css('background-color','gray');
+			$('a #pp').attr('title','已经是第一页');
+			return false;
+		}
+	}
+	var input = $("<input>").attr("type", "hidden").attr("name", "page_no").val(page_no);
+	$('#formSearch').append($(input));
+	$('#formSearch').submit();
+	return false;
+}
+</script>
+</head>
+<body>
+{% include "imarket/include/header.html" %}
+<div id="container">
+{% include "imarket/include/tbkLeft.html" %}
+<div id="center">&nbsp;
+<form action="t?command=tbkItemsToSent" method="post" onsubmit="return sendTBK()" id="form1">
+{% for taobaoke_item in taobaoke_items %}
+	<div class=item>
+		<div><a href="{{taobaoke_item.click_url}}" target="_blank"><div class=iimg><img class=small2big alt="{{taobaoke_item.title}}" title="{{taobaoke_item.title}}" src="{{taobaoke_item.pic_url}}"></div></a></div>
+		<div class=itxt><span><a href="{{taobaoke_item.click_url}}">{{taobaoke_item.title|safe}}</a></span></div>
+		<div class=sendt><span>￥:{{taobaoke_item.price}}</span>
+		<input type="checkbox" name="TBK{{taobaoke_item.num_iid}}" id="CHK{{taobaoke_item.num_iid}}"></input><label for="CHK{{taobaoke_item.num_iid}}"><span>选中发微博</span></label></div>
+		<input type="hidden" name="TBK{{taobaoke_item.num_iid}}" value="{{taobaoke_item.num_iid}}" />
+		<input type="hidden" name="TBK{{taobaoke_item.num_iid}}.click_url" value="{{taobaoke_item.click_url}}" />
+		<input type="hidden" name="TBK{{taobaoke_item.num_iid}}.title" value="{{taobaoke_item.title}}" />
+		<input type="hidden" name="TBK{{taobaoke_item.num_iid}}.pic_url" value="{{taobaoke_item.pic_url}}" />
+		<input type="hidden" name="TBK{{taobaoke_item.num_iid}}.price" value="{{taobaoke_item.price}}" />
+	</div>
+{% endfor %}
+		<div class=pagination>
+		<span><a onclick="return pgnClk('prev')" href="prev" id=pp>上一页</a></span>
+	    <span><a onclick="return pgnClk('next')" href="next" id=pn>下一页</a></span>
+	</div>
+	<div class=sendb><input type="submit" value="发送到微博" name="tbk2t" id="tbk2t" class=btn /></div>
+</form>
+</div>
+{% include "imarket/include/right.html" %}
+</div>
+{% include "footer.html" %}
+</body>
+</html>

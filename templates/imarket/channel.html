@@ -1,0 +1,91 @@
+{% extends "imarket/base.html" %} {% block container %}
+<style>
+#sentTDlg{}
+#sentTDlg #it{}
+#sentTDlg #im{width: 92px; height: 92px;}
+</style>
+<div id="sentTDlg" title="把这个好东东分享到您的微博吧" style="display: none;">
+<textarea rows="6" id=it cols="43" id="message" onKeyDown='check_length()'></textarea>
+<img alt="" src="" id=im>
+<div>还可再输入<span id=imputlimit>100</span>字</div>
+<div>商品链接会自动加到发送的微博中</div>
+</div>
+<script type="text/javascript">
+var currentMessage = '';
+function check_length(){
+maxLen = 120;
+if ($('#it').val().length >= maxLen) {
+	$('#it').val() = $('#it').val().substring(0, maxLen);
+}else{
+$('#imputlimit').text(maxLen - $('#it').val().length); 
+}
+currentMessage=$('#it').val();
+}
+
+$(document).ready(function() {
+    $("#sentTDlg").dialog({
+      autoOpen: false,
+      modal: true,
+	  show: 'slide',
+	  width: 400
+    });
+
+  $(".item .timg").click(function(e) {
+        e.preventDefault();
+        num_iid = $(this).attr('id').replace('TIMG', '');
+        src = $('#IMG'+num_iid).attr('src');
+        initialMessage = $('#ATTL'+num_iid).text() + " " + $('#PRC'+num_iid).text();  
+        $('#im').attr('src',src);
+        $('#it').val(initialMessage);
+        $("#sentTDlg").dialog({
+          buttons: [{
+                      text: "分享到微博",
+                      click: function() {
+              	  $(this).html('<img src="/images/processing.gif" alt="processing" >正在发送.......请稍候');
+        		  url = "/imarket/ajax/sendT";
+        		  click_url = $('#A'+num_iid).attr('href');
+        		  //message = $('#it').val();
+        		  parameters = ({num_iid:num_iid,message:currentMessage,click_url:click_url, image_url:src});
+        		  $.post(url, parameters, function(result){
+            		  if (result.indexOf('success')){
+    	    			  $('#STS'+num_iid).text('发送成功');
+	          		  }else{
+	          			$('#STS'+num_iid).text('发送失败');
+		          	  }
+            		  $("#sentTDlg").dialog("close");
+            	})
+              }},
+               {text: "取消",
+                click: function() { $(this).dialog("close");$('#STS'+num_iid).text('') }
+               }]
+        });
+    	$("#sentTDlg").dialog("open");
+    	return false;
+      });
+
+  {% if not session.tUser %}
+  	$(".item .timg").unbind('click');
+  	$(".item .timg").attr('title', '绑定新浪微博后，可发送微博哦');
+  {% endif %}
+  
+});
+	
+</script>
+<div id="container">
+{% spaceless %}
+<div id="center">
+{% for taobaoke_item in taobaoke_items %}
+	<div class=item>
+		<div><a href="{{taobaoke_item.click_url}}" id="A{{taobaoke_item.num_iid}}"  target="_blank"><div class=iimg><img class=small2big alt="{{taobaoke_item.title}}" id="IMG{{taobaoke_item.num_iid}}" src="{{taobaoke_item.pic_url}}"></div></a></div>
+		<div class=itxt><span><a href="{{taobaoke_item.click_url}}" id="ATTL{{taobaoke_item.num_iid}}" >{{taobaoke_item.title|safe}}</a></span></div>
+		<div class=sendt><span id="PRC{{taobaoke_item.num_iid}}" >￥:{{taobaoke_item.price}}</span>
+		<img alt="分享到新浪微博" class=timg src="http://www.sinaimg.cn/blog/developer/wiki/LOGO_16x16.png" id="TIMG{{taobaoke_item.num_iid}}"	style="opacity:0.4;filter:alpha(opacity=40)" onmouseover="this.style.opacity=1;this.style.cursor='hand';" onmouseout="this.style.opacity=0.4;">
+		<span id='STS{{taobaoke_item.num_iid}}' class="remark"></span>
+		</div>
+	</div>
+{% endfor %}
+</div>
+{% endspaceless %}
+{% include "imarket/include/right.html" %}
+</div>
+{% endblock %}

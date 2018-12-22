@@ -1,0 +1,26 @@
+<div class="pagination">
+    <span class="steplinks">
+		{% if page_no != 1 %}
+			<a href="?page_no=1">1</a>
+		{% endif %}
+		{% if page_no > 2 %}
+            <a href="?page={{ page_no|add:'-1'}}">{{ page_no|add:'-1'}}</a>
+        {% endif %}
+        <span class="current">
+            {{page_no}}
+        </span>
+		{% if page_no|add:'1' <= total_page_no %}
+            <a href="?page={{ page_no|add:'1'}}">{{ page_no|add:'1'}}</a>
+        {% endif %}
+		{% if page_no|add:'2' <= total_page_no %}
+            <a href="?page={{ page_no|add:'2'}}">{{ page_no|add:'2'}}</a>
+        {% endif %}
+		<span class="pagebreak">...</span>
+        {% if page_no|add:'1' <= total_page_no %}
+            <a href="?page={{ page_no|add:'1'}}">下一页</a>
+        {% endif %}
+		<span class="totalnums">
+           	 共{{total_page_no}}页
+        </span>
+    </span>
+</div>

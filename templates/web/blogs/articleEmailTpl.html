@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>{{article.title}} Triplebirds</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+</head>
+{% spaceless %}
+<body>
+<div id="maxw">
+<div id="leftpart">
+	<br><span style="font-size:1.5em; font-weight:bold;color: #494949;"><a href="http://www.Triplebirds.com/topic/{{article.article_id}}?key={{article.key}}&source=mail" style="color: #336699; text-decoration: none; ">{{article.title}}</a></span><br>
+	<br><br>
+	<div style="text-indent:2.5em; line-height: 150%; margin:5px 0 0 0;" id="articleCnt">{{article.content|safe }}</div><br>
+	<h2>标签&nbsp; ·&nbsp; ·&nbsp; ·&nbsp; ·&nbsp; ·&nbsp;·&nbsp;</h2>
+	<div> 
+		<span style="border-bottom: 1px dotted rgb(221, 221, 221); line-height: 200%;">
+			  <a href="http://www.Triplebirds.com/topic/{{article.tag}}?source=mail" style="color: #336699; text-decoration: none; ">{{article.tag}}</a></span>&nbsp;
+		<p><a href="http://www.Triplebirds.com/topic/{{article.article_id}}?key={{article.key}}&source=mail" style="color: #336699; text-decoration: none; ">在线浏览该文章</a>
+	</div>
+</div>
+<br><span style="font-size:0.8em; font-weight:bold;color: #494949;">此为推广邮件，如有打扰，请多多包涵</span><br>
+</div>
+</body>
+{% endspaceless %}
+</html>

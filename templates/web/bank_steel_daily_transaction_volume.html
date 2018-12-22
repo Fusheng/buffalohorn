@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <title>Bank steel daily transaction volume</title>
+    {% include "common/siteAnalytics.html" %}
+    <link href="/css/sucks.css" rel="stylesheet">
+    <link href="/css/webM.css" rel="stylesheet">
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0/echarts.min.js"></script>
+
+
+</head>
+<body>
+
+<div id="dataChart" style="width: 600px;height:400px;"></div>
+<script>
+    var dataChart = echarts.init(document.getElementById('dataChart'));
+    var dataUrl = '/data/bankSteelDailyTransactionData';
+    var dates = [];    //日期数组（实际用来盛放X轴坐标值）
+    var vols = [];    //成交量数组（实际用来盛放Y坐标值）
+
+    $.get(dataUrl).done(function (data) {
+
+        $.each(data.list, function (index, item) {
+                dates.push(item.trans_date);
+                vols.push(item.vol);
+        });
+
+        dataChart.setOption({
+            title: {
+                text: 'BankSteelDailyTransactionData'
+            },
+            tooltip: {},
+            legend: {
+                data: ['成交量']
+            },
+            xAxis: {
+                data: dates
+            },
+            yAxis: {},
+            series: [{
+                name: '成交量',
+                type: 'line',
+                data: vols
+            }]
+        });
+    });
+</script>
+
+<div id=adsenseCd>{% include "common/adsenseCdM.html" %}</div>
+{% include "footer.html" %}
+</body>
+</html>

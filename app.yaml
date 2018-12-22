@@ -1,0 +1,44 @@
+runtime: python27
+api_version: 1
+threadsafe: false
+skip_files: |
+ ^(.*/)?(
+ (app\.yaml)|
+ (app\.yml)|
+ (index\.yaml)|
+ (index\.yml)|
+ (#.*#)|
+ (.*~)|
+ (.*\.py[co])|
+ (.*/RCS/.*)|
+ (\..*)|
+ (docs/.*)|
+ (venv/.*)|
+ (test/.*)
+ )$
+
+handlers:
+- url: /images
+  static_dir: images
+  
+- url: /js
+  static_dir: js
+  
+- url: /css
+  static_dir: css
+  
+- url: /content
+  static_dir: content
+ 
+- url: /favicon\.ico
+  static_files: images/favicon.ico
+  upload: images/favicon\.ico
+  
+- url: /blobstore/.*
+  script: entreasury.app
+
+- url: /mirror/.*
+  script: mirror.app
+
+- url: /.*
+  script: main.py

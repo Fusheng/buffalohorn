@@ -1,0 +1,26 @@
+{% extends "imarket/base.html" %} {% block container %}
+<div id="container">
+<div id="center">
+<ol>
+{% for brand in brands %}
+	<li><span><a href="/channel/{{brand.brand}}">{{brand.display}}</a></span>
+	<span><a href="?type=tbkItems&brand={{brand.brand}}">商品</a></span>
+	<span><a href="?type=brand&cmd=modify&key={{brand.key}}">修改</a></span>
+	<span><a href="?type=brand&cmd=delete&key={{brand.key}}" class='delete'>删除</a></span></li>
+{% endfor %}
+</ol>
+<div class=clear>
+<hr>
+<h3> 尽量使用品牌的英文标识<h3>
+<span><a href="?type=brand">增加一个新品牌 </a></span>
+<form action="?type=brand&cmd=put" method="post" id="form1" ><ul>
+<input type="hidden" name="key" value="{{brand.key}}" />
+<li><span class=column>brand:</span><input type="text" name="brand" value="{{brand.brand}}"/></li>
+<li><span class=column>display:</span><input type="text" name="display" value="{{brand.display}}"/></li>
+<li><span class=column>cid:</span><input type="text" name="cid" value="{{brand.cid|default_if_none:''}}" width="200"/></li>
+<li><span class=column>&nbsp;</span><input type="submit" name="submit" value="插入或更新一个品牌" /></li></ul>
+</form>
+</div>
+</div>
+</div>
+{% endblock %}

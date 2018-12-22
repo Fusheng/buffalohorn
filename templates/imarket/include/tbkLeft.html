@@ -1,0 +1,116 @@
+﻿{% extends "imarket/include/left.html" %} {% block tbkSearchFilters %}
+<style>
+.slct{width: 115px;}
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#cid option").each(
+		function(){
+		if ($(this).val()=={{cid}}){
+			$(this).attr('selected','selected');
+		}}
+	);
+	var mall_item = '{{mall_item}}';
+	var cid = '{{cid}}';
+	if (mall_item){$('#mall_item').attr('checked', true);}
+	if (cid){$("#formSearch option[value=cid]").attr('selected','selected');}
+})
+</script>
+<div id=tbkFilter>
+<form name=formSearch id=formSearch action='?' method=get>
+<input type=hidden name=cmd value='showTaobaokeItems'>
+<ul>
+	<li><label for="keyword">关键字</label><input type=text size=30	name='keyword' id='keyword' value='{{keyword}}' title="关键字或者分类不能都为空"></li>
+	<li><label for="cid">分类</label>
+		<select name=cid id=cid class="slct">
+			<option value="">--请选择--</option>
+			<option value="30">男装</option>
+			<option value="50011740">流行男鞋</option>
+			<option value="1625">女士内衣/男士内衣/家居服</option>
+			<option value="1512">手机</option>
+			<option value="50012081">国货精品手机</option>
+			<option value="14">数码相机/摄像机/摄影器材</option>
+			<option value="1201">MP3/MP4/iPod/录音笔</option>
+			<option value="1101">笔记本电脑</option>
+			<option value="50019780">平板电脑/MID</option>
+			<option value="11">电脑硬件/显示器/电脑周边</option>
+			<option value="50018222">台式机/一体机/服务器</option>
+			<option value="50018264">网络设备/网络相关</option>
+			<option value="50008090">3C数码配件市场</option>
+			<option value="50012164">闪存卡/U盘/存储/移动硬盘</option>
+			<option value="50007218">办公设备/耗材/相关服务</option>
+			<option value="50018004">电子词典/电纸书/文化用品</option>
+			<option value="20">电玩/配件/游戏/攻略</option>
+			<option value="50022703">大家电</option>
+			<option value="50011972">影音电器</option>
+			<option value="50012100">生活电器</option>
+			<option value="50012082">厨房电器</option>
+			<option value="50002768">个人护理/保健/按摩器材</option>
+			<option value="27">家装主材</option>
+			<option value="50020332">基础建材</option>
+			<option value="50020485">五金/工具</option>
+			<option value="50020579">电子/电工</option>
+			<option value="50008164">住宅家具</option>
+			<option value="50020611">商业/办公家具</option>
+			<option value="50020670">布艺软饰</option>
+			<option value="50020808">工艺饰品</option>
+			<option value="50020857">特色手工艺</option>
+			<option value="50011949">酒店客栈/景点门票/度假旅游</option>
+			<option value="21">居家日用/收纳/礼品</option>
+			<option value="50016349">厨房/餐饮用具</option>
+			<option value="50016348">日化/清洁/护理</option>
+			<option value="50008163">床上用品/靠垫/毛巾/布艺</option>
+			<option value="35">奶粉/辅食/营养品</option>
+			<option value="50014812">尿片/洗护/喂哺/推车床</option>
+			<option value="50022517">孕产妇营养/用品/孕妇装</option>
+			<option value="50005998">益智玩具/早教/童玩车</option>
+			<option value="50008165">童装/童鞋/亲子装</option>
+			<option value="50020276">品牌保健品</option>
+			<option value="50020275">传统滋补品/其他保健营养品</option>
+			<option value="50002766">零食/坚果/茶叶/特产</option>
+			<option value="50016422">粮油/蔬果/干货/速食/水产</option>
+			<option value="50008075">演出/吃喝玩乐折扣券</option>
+			<option value="40">腾讯QQ专区</option>
+			<option value="50010728">运动/瑜伽/健身/球迷用品</option>
+			<option value="50013886">户外/登山/野营/旅行用品</option>
+			<option value="50011699">运动服/运动包/颈环配件</option>
+			<option value="50010388">运动鞋</option>
+			<option value="25">玩具/娃娃/模型/动漫/桌游</option>
+			<option value="50011665">网游装备/游戏币/帐号/代练</option>
+			<option value="50008907">手机号码/套餐/增值业务</option>
+			<option value="99">网络游戏点卡</option>
+			<option value="23">古董/邮币/字画/收藏</option>
+			<option value="50007216">鲜花速递/花卉仿真/绿植园艺</option>
+			<option value="26">汽车/用品/配件/改装/摩托</option>
+			<option value="50004958">移动/联通/电信充值中心</option>
+			<option value="50005700">品牌手表/流行手表</option>
+			<option value="50010788">彩妆/香水/美发/工具</option>
+			<option value="16">女装/女士精品</option>
+			<option value="50006843">女鞋</option>
+			<option value="50006842">箱包皮具/热销女包/男包</option>
+			<option value="50010404">服饰配件/皮带/帽子/围巾</option>
+			<option value="50011397">珠宝/钻石/翡翠/黄金</option>
+			<option value="28">ZIPPO/瑞士军刀/眼镜</option>
+			<option value="33">书籍/杂志/报纸</option>
+			<option value="34">音乐/影视/明星/音像</option>
+			<option value="50017300">乐器/吉他/钢琴/配件</option>
+			<option value="29">宠物/宠物食品及用品</option>
+			<option value="2813">成人用品/避孕/计生用品</option>
+			<option value="1801">美容护肤/美体/精油</option>
+			<option value="50013864">饰品/流行首饰/时尚饰品新</option>
+			<option value="50011150">其它</option>
+		</select></li>
+	<li class=price><label for="start_price">价格</label><input	type=text name='start_price' id='start_price' value='{{start_price}}'>到
+		<input type=text name='end_price' value='{{end_price}}'></li>
+	<li class=credit><label for="start_credit">卖家信用</label>
+		<input type=text name='start_credit' id='start_credit' value='{{start_credit}}'>到
+		<input type=text name='end_credit' value='{{end_credit}}'></li>
+	<li><label for='area'>商品所在地</label><input type=text name='area'	id='area' value='{{area}}'></li>
+	<li><label for="mall_item">商城商品</label><input type=checkbox	name='mall_item' id='mall_item' value='true'></li>
+	<li><label for="sort">排序</label><select name=sort id=sort class="slct">
+	<option value="default">默认排序</option><option value="price_asc">价格从低到高</option><option value="price_desc">价格从高到低</option><option value="credit_desc">信用从高到低</option></select></li>
+	<li><input type=submit name='search' value='搜&nbsp;&nbsp;索' class=btn ></li>
+</ul>
+</form>
+</div>
+{% endblock %}

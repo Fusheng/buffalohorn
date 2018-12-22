@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Blogs - Post/Edit</title>
+{% include "web/headMeta.html" %}
+<link rel="stylesheet" type="text/css" href="/css/jquery.cleditor.css" />
+<script type="text/javascript" src="/js/jquery.cleditor.min.js"></script> 
+</head>
+<body>
+<script>
+function articlrPost(){
+	if($("#title").val().length<1){
+		$("#warning").append("title can not be null").addClass("warnMessage");
+		return false;
+	}
+
+	var key = '{{article.key}}'
+	if (key){
+		$('#postform').attr('action', '?command=edit&key='+key);
+	}
+	
+	$("#sub").attr("disabled","disabled").attr("value","loading");
+	document.postform.submit();
+}
+
+$(document).ready(function() {
+    $("#content").cleditor({
+    	 width:        600,
+         height:       600
+    });
+  });
+
+</script>
+<div id="maxw">
+<div id="leftpart">
+<form action="?command=save"  name="postform" id="postform" onSubmit="return articlrPost();" method="post">
+	<div id="warning"></div>
+	<p class="post_page">Give a title to your article here: <br>
+		<input type="text" name="title" id="title" class="i" value="{{article.title}}">
+		<input type="hidden" name="articleOwnerId" value="">
+  	<p class="post_page">Enter the full body of your article here, feel free to ask questions/challenge the readers:<br>
+  		<div id="contentContainer">
+		<textarea id='content' name="content" style="width:88%; height:300px; font-size:12px">{{article.content}}</textarea>
+		</div>
+  	<p class="post_page">Give a tags to your article here:
+  		<input type="text" name="tag" class="i"  value="{{article.tag}}">
+  	{% if not article %}
+  	<p class="post_page">标签分类:
+		<select name="cat">
+		  <option value="1">淘宝客推广</option>
+		  <option value="100">技术文章</option>
+		  <option value="200">个人杂记</option>
+		</select>
+	{% endif %}
+	<br>
+  	<p><input type="submit" id=sub value='Post/Edit'><span class="tip" style="font-size:0.9em;">(Ctrl+Enter)</span>
+</form>
+</div>
+<div id="rightpart">
+{% include "web/blogs/rightInclude.html" %}
+</div>
+{% include "footer.html" %}
+</div><!-- end  maxw  -->
+</body>
+</html>

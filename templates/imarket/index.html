@@ -1,0 +1,52 @@
+{% extends "imarket/base.html" %} {% block container %}
+<div id="container">
+<div id="center">
+<style type="text/css">
+body {letter-spacing:0;color:#434343;background:#efefef url(/images/slides/background.png) repeat top center;-webkit-font-smoothing: subpixel-antialiased;}
+#center{width:657px; }
+#slides_frame {width:600px;	height:350px;	position:relative;}
+#ribbon {position:absolute;top:0px;left:29px;z-index:500;width:112px; height:112px; }
+#frame {position:absolute;z-index:0;width:739px;height:341px;left: -40px;}
+#slides {position:absolute;top:16px;left:14px;z-index:100;}
+.slides_container {width:570px;overflow:hidden;position:relative;display:none;left: 30px;}
+.slides_container a {width:570px;height:270px;display:block;}
+.slides_container a img {display:block;}
+.slides_container img{width:570px; height:270px; }
+#slides .next,#slides .prev {position:absolute;top:107px;left:-11px;width:24px;height:43px;display:block;z-index:101;}
+#slides .next {left:614px;}
+.pagination {margin:26px auto 0;width:100px;}
+.pagination li {float:left;margin:0 1px;list-style:none;}
+.pagination li a {display:block;width:12px;height:0;padding-top:12px;background-image:url(/images/slides/pagination.png);background-position:0 0;float:left;overflow:hidden;}
+.pagination li.current a {background-position:0 -12px;}
+.pagination li a:HOVER{background: #599100;}
+</style>
+<script src="/js/jquery.slides.min.js"></script>
+<script>
+	$(function(){
+		$('#slides').slides({
+			preload: true,
+			preloadImage: '/images/slides/loading.gif',
+			play: 5000,
+			pause: 2500,
+			hoverPause: true
+		});
+	});
+</script>
+<div id="slides_frame">
+	<div id="slides">
+		<div class="slides_container">
+			{% for slide in slides %}
+			<a href="{{slide.pref_link_url}}" title="{{slide.pref_link_title}}" target="_blank">
+			<img src="{{slide.pref_img_url}}" alt="{{slide.pref_link_text}}"></a>
+			{% endfor %}
+		</div>
+	</div>
+	<img src="/images/slides/example-frame.png" id="frame">
+</div>
+<div class=stsT>
+
+</div>
+</div>
+{% include "imarket/include/rightIndex.html" %}
+</div>
+{% endblock container %}

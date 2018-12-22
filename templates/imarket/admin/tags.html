@@ -1,0 +1,24 @@
+{% extends "imarket/base.html" %} {% block container %}
+<div id="container">
+<div id="center">
+<ol>
+{% for tag in tags %}
+	<li><span>名称:{{tag.tag}}</span><span>&nbsp;&nbsp;&nbsp;文章个数:{{tag.article_count}}&nbsp;&nbsp;&nbsp;分类:{{tag.cat}}</span>
+		<span><a href="?type=tag&cmd=modify&key={{tag.key}}">修改</a></span>
+		<span><a href="?type=tag&cmd=delete&key={{tag.key}}" class='delete'>删除</a></span>
+	</li>
+{% endfor %}
+</ol>
+<div class=clear>
+<hr>
+<form action="?type=tag&cmd=put" method="post" id="form1" ><ul>
+<input type="hidden" name="key" value="{{tag.key}}" />
+<li><span class=column>名称:</span><input type="text" name="tag" value="{{tag.tag}}"/></li>
+<li><span class=column>文章个数:</span><input type="text" name="article_count" value="{{tag.article_count}}"/></li>
+<li><span class=column>分类:</span><input type="text" name="cat" value="{{tag.cat}}"/></li>
+<li><span class=column>&nbsp;</span><input type="submit" name="submit" value="插入或者更新一个标签" /></li></ul>
+</form>
+</div>
+</div>
+</div>
+{% endblock %}

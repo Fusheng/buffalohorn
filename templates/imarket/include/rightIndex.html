@@ -1,0 +1,10 @@
+{% extends "imarket/include/right.html" %}
+{% block weiboAccount %}
+{% include "common/siteSearch.html" %}
+{{block.super}}
+{% endblock weiboAccount %}
+{% block otherContent %}
+{% for rcmAtl in rmdArticles %}
+<li class="rcmAtl"><a href="/topic/{{rcmAtl.article_id}}?key={{rcmAtl.article_key}}">{{rcmAtl.recommand_title}}</a></li>
+{% endfor %}
+{% endblock otherContent %}

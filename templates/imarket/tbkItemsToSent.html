@@ -1,0 +1,39 @@
+{% extends "imarket/base.html" %} {% block container %}
+<script type="text/javascript">
+function sendTBK(){
+	var checkedTbks = '';
+	var chks = $(".fss");
+	$.each(chks, function(index, value){
+		checkedTbks = checkedTbks + $(value).attr('name')+',';
+	});
+	if(checkedTbks){
+		var input = $("<input>").attr("type", "hidden").attr("name", "checkedTbks").val(checkedTbks);
+		$('#form1').append($(input));
+		return true;
+	}
+	return false;
+}
+</script>
+<div id="container">
+{% include "imarket/include/tbkLeft.html" %}
+<div id="center">
+<form action="t?command=uploadTbk" method="post" id="form1" onsubmit="return sendTBK()">
+<div>以下信息将会发送到您的微博</div>
+{% for taobaoke_item in taobaoke_items %}
+	<div class=item>
+		<div><a href="{{taobaoke_item.click_url}}" target="_blank"><div class=iimg><img class=small2big alt="{{taobaoke_item.title}}" title="{{taobaoke_item.title}}" src="{{taobaoke_item.pic_url}}"></div></a></div>
+		<div class=itxt><span><a href="{{taobaoke_item.click_url}}">{{taobaoke_item.title|safe}}</a></span></div>
+		<div class=sendt><span>￥:{{taobaoke_item.price}}</span></div>
+		<input type="hidden" name="TBK{{taobaoke_item.num_iid}}" value="{{taobaoke_item.num_iid}}" class='fss'/>
+		<input type="hidden" name="TBK{{taobaoke_item.num_iid}}.click_url" value="{{taobaoke_item.click_url}}" />
+		<input type="hidden" name="TBK{{taobaoke_item.num_iid}}.title" value="{{taobaoke_item.title}}" />
+		<input type="hidden" name="TBK{{taobaoke_item.num_iid}}.pic_url" value="{{taobaoke_item.pic_url}}" />
+		<input type="hidden" name="TBK{{taobaoke_item.num_iid}}.price" value="{{taobaoke_item.price}}" />
+	</div>
+{% endfor %}
+	<div class=sendb><input type="submit" value="发送到微博" name="tbk2t" id="tbk2t" class=btn /></div>
+</form>
+</div>
+{% include "imarket/include/right.html" %}
+</div>
+{% endblock %}

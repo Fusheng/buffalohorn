@@ -1,0 +1,26 @@
+{% extends "imarket/base.html" %} {% block container %}
+<div id="container">
+<div id="center">
+<ol>
+{% for rmdAtl in rmdAtlsList %}
+	<li><span>{{rmdAtl.recommand_title}}</span><span>&nbsp;位置:{{rmdAtl.position}}</span>
+		<span><a href="?type=recommandArticles&cmd=modify&key={{rmdAtl.key}}">修改</a></span>
+		<span><a href="?type=recommandArticles&cmd=delete&key={{rmdAtl.key}}" class='delete'>删除</a></span>
+		<span><a href="/topic/{{rmdAtl.article_id}}" target="_blank">预览</a></span>
+	</li>
+{% endfor %}
+</ol>
+<div class=clear>
+<hr>
+<form action="?type=recommandArticles&cmd=put" method="post" id="form1" ><ul>
+<input type="hidden" name="key" value="{{rmdAtls.key}}" />
+<li><span class=column>文章ID:</span><input type="text" name="article_id" value="{{rmdAtls.article_id}}"/></li>
+<li><span class=column>文章Key:</span><input type="text" name="article_key" value="{{rmdAtls.article_key}}" size="120"/></li>
+<li><span class=column>推荐标题:</span><input type="text" name="recommand_title" value="{{rmdAtls.recommand_title}}" size="30"/></li>
+<li><span class=column>推荐位置:</span><input type="text" name="position" value="{{rmdAtls.position}}" width="200"/><span>首页左边栏请输入  INDEX_L, 主页右边栏 INDEX_R</span></li>
+<li><span class=column>&nbsp;</span><input type="submit" name="submit" value="推荐一篇文章" /></li></ul>
+</form>
+</div>
+</div>
+</div>
+{% endblock %}

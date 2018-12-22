@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+{% include "imarket/include/headMeta.html" %}
+<style type="text/css">
+#indexR{float:right; width:20%; margin-right:15%;}
+#indexL{float:left; width:40%; margin-left:15%;}
+ul{margin:0px;list-style-type:none; }
+li {list-style-type:none; margin: 0 0 0 0;float:left;}
+th{width:50%; align:center}
+</style>
+<title>Marketing</title>
+</head>
+<body>
+<div id="top">
+<h3>营销助手</h3>
+</div>
+<div>
+<form action="/imarket/t?command=update" method="post">
+<p>微博文本<input type="text" name="message" width="140"/>
+<p>微博图片<input type="file" name="filename" width="140"/>
+<input type="submit" name="submit">
+</form>
+</div>
+{% include "footer.html" %}
+</body>
+</html>

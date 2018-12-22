@@ -1,0 +1,39 @@
+{% extends "common/base.html" %} {% block head %}
+<title>{{tag}} Triplebirds</title>
+{% include "web/headMeta.html" %}
+{% endblock head %}
+{% block body %}
+{% spaceless %}
+<div id="maxw">
+<div id="leftpart">
+	{% for article in articles %}
+	<div class="article">
+	<br><h3><a href="{% if type == 'topic' %}/topic/{{article.article_id}}?key={{article.key}}{% else %}?cmd=view&article_id={{article.article_id}}&key={{article.key}}{% endif %}">{{article.title}}</a></h3><br>
+	<span>{{article.post_time|date:"Y-m-d G:i"}}&nbsp;Posted by {{article.nickname|default:''}}</span>&nbsp;&nbsp;&nbsp;
+	<br><br>
+	{% if forloop.first %}<div id=adsenseCd>{% include "common/adsenseCd.html" %}</div>{% endif %}
+	<div class="content">
+		{{article.content|safe|striptags|slice:":99"}}{% if article.content|length > 99 %}...{% endif %}
+	</div>
+	<h2>标签&nbsp; ·&nbsp;<span class="tag"><a href="?cmd=view&tag={{article.tag}}">{{article.tag}}</a></span></h2>
+	</div>
+	{% endfor %}
+	{% if articles|length >= 10 %}
+	<p style="text-align: right;"><a href="?cmd=view&offset={{offset|default_if_none:'0'|add:'10'}}{% if tag %}&tag={{tag}}{% endif %}">&lt;&lt;向前翻页</a>
+	{% endif %}
+	{% if articles|length < 10 and offset and offset > 0%}
+	<p style="text-align: right;"><a href="?cmd=view&offset=0{% if tag %}&tag={{tag}}{% endif %}">回到首页&gt;&gt;</a>
+	{% endif %}
+</div>
+
+<div id="rightpart">
+{% if type == "topic" %}
+{% include "web/blogs/rightIncludeTopic.html" %}
+{% else %}
+{% include "web/blogs/rightInclude.html" %}
+{% endif %}
+</div>
+</div> 
+{% include "footer.html" %}
+{% endspaceless %}
+{% endblock body %}

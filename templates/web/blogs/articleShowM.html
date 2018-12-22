@@ -1,0 +1,145 @@
+{% extends "common/baseM.html" %}
+
+{% block head %}
+
+<title>{{article.title}} Triplebirds</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="/css/webM.css">
+<script type="text/javascript" src="/js/web.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.4.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jqueryui/1.8.9/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://libs.baidu.com/jqueryui/1.8.9/themes/sunny/jquery-ui.css">
+{% include "common/siteAnalytics.html" %}
+
+<script type="text/javascript" src="/js/jquery.textarea-expander.js"></script>
+<style type="text/css">
+.simA{font-size: 1.1em;}
+textarea {width:100%;}
+</style>
+<script>
+function postReply(){
+	if(!$("#comment").val().length){
+		$("#warnMessage").html("说点什么吧/We hope you say something.<br>");
+		return false;
+	}else{
+		$("#butReply").attr('disabled','true');
+		document.postform.submit();
+	}
+}
+
+function commentFocus(){
+	$('html, body').animate({
+	    scrollTop: $("#youDReply").offset().top
+	}, 1000);
+	$("#comment").focus();
+}
+
+$(document).keypress(function(e){
+	if(e.ctrlKey && e.which == 13 || e.which == 10) {
+		postReply();
+	}
+});
+
+$(document).ready(function(){
+	
+	account = '{{session.googleAccount}}';
+	if(!account){
+		account = '{{session.tUser}}';
+		}
+	if(!account){
+		$('#comment').attr('disabled', 'disabled');
+		$('#butReply').attr('disabled', 'disabled');
+	}
+	$('#comment').TextAreaExpander(170, 400);
+	var secs=13,si=setInterval(function(){if(--secs){;}else{$('#message').remove();}}, 1000);
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#deleteDialog").dialog({
+      autoOpen: false,
+      modal: true,
+	  show: 'slide'
+    });
+	
+  $("a.delete").click(function(e) {
+    e.preventDefault();
+    var targetUrl = $(this).attr("href");
+	$("#deleteDialog").dialog({
+      buttons : {
+	        "Confirm" : function() {
+	          window.location.href = targetUrl;
+	        },
+	        "Cancel" : function() {
+	          $(this).dialog("close");
+	        }
+	  }
+    });
+	$("#deleteDialog").dialog("open");
+	return false;
+  });
+});
+</script>
+{% endblock head %}
+
+{% block body %}
+{% spaceless %}
+
+<div id="maxw">
+	<br><span class="title">{{article.title}}</span><br>
+	<span>{{article.post_time|date:"Y-m-d G:i"}}&nbsp;Posted by {{article.nickname|default:''}}</span>&nbsp;&nbsp;&nbsp;
+	<a href="javascript:onClick=commentFocus();">Post Reply</a>&nbsp;&nbsp;&nbsp;
+	<br><br>
+	{% if message %}
+		<div id=message style="background: #A9DA92; font-size: 1.2em;font-weight: bold;text-align: center;">{{message}}</div>
+	{% endif %}
+	<div class="content" id="articleCnt">{{article.content|safe }}</div><br>
+	{% if similarArticles %}
+	<h2>您可能感兴趣的类似文章&nbsp; ·&nbsp; ·&nbsp; ·&nbsp; ·&nbsp; ·&nbsp;·&nbsp;</h2>
+	{% for simArtl in similarArticles %}
+		<li><a href="{% if type == 'topic' %}/topic/{{simArtl.article_id}}?key={{simArtl.key}}{% else %}?cmd=view&key={{simArtl.key}}{% endif %}" class="simA">{{simArtl.title}}</a></li>
+		{% endfor %}
+	{% endif %}
+
+    <div id=adsenseCd>{% include "common/adsenseCdM.html" %}</div>
+
+	<h2>标签&nbsp; ·&nbsp; ·&nbsp; ·&nbsp; ·&nbsp; ·&nbsp;·&nbsp;</h2>
+	<div> 
+		<span style="border-bottom: 1px dotted rgb(221, 221, 221); line-height: 200%;">
+			  <a href="{% if type == 'topic' %}/topic/{{article.tag}}{% else %}?cmd=view&tag={{article.tag}}{% endif %}">{{article.tag}}</a></span>&nbsp;
+	</div>
+	<h2>回复&nbsp; ·&nbsp; ·&nbsp; ·&nbsp; ·&nbsp; ·&nbsp;·&nbsp;</h2>
+	{% for comment in comments %}
+		<div>
+			 <span>{{comment.post_time|date:"Y-m-d G:i"}}&nbsp;</span>
+			 <span class="replyUser">posted by {% if comment.email %} {{comment.concealedEmail}}{% else %}Anonymous{% endif %}</span>
+			 {% if session.googleAccount %} {% if session.googleAccount == comment.email %}
+			 	<span>&nbsp;&nbsp;<a href="?cmd=deleteComment&article_id={{article.article_id}}&comment_key={{comment.key}}" >删除</a></span>	
+			 {% endif %}{% endif %}
+		</div>
+		<div class="replyContent">{{comment.comment}}</div><br><br>
+	{% endfor %}
+	<div>
+		<h2 id="youDReply"><a name="postReply"></a>你的回应 &nbsp; ·&nbsp; ·&nbsp; ·&nbsp; ·&nbsp; ·&nbsp; ·&nbsp;</h2>
+		{% if session.googleAccount %}
+		<h2 id=logined>您当前的登录用户为：{% if session.googleAccount %}{{session.googleAccount }}
+					{% else %}{{ session.tUser.nick }}{% endif %}，您可以<a href="/logout?continue={{continue}}">登出</a>更换用户</h2>
+		{% else %}
+		<h2 id=notlogin><img src='/images/Google16x16.png'></img><a href="/login?continue={{continue}}" class="gglLogin">登录google</a>
+			帐号吧，这样您才能评论哦</h2>
+		{% endif %}
+	    <form method="post" id="postform" name="postform" action ="?cmd=reply&article_id={{article.article_id}}">
+        <input type="hidden" name="email" value="{% if session.googleAccount %}{{session.googleAccount }}
+					{% else %}{{ session.tUser.nick }}{% endif %}">
+	    <span id="warnMessage" class="warnMessage"></span>
+        <textarea name="comment" id="comment" rows="8"></textarea><br>
+        <input value="post your comment" onclick="postReply()" id=butReply type="button"><span class="tip" style="font-size:0.9em;">(Ctrl+Enter)</span></form>
+    </div>
+
+{% include "footerM.html" %}
+</div><!-- end  maxw  -->
+{% endspaceless %}
+{% endblock body %}

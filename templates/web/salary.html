@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <title>上海市五险一金及税后工资计算器</title>
+
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    {% include "common/siteAnalytics.html" %}
+
+    <script>
+        var social_base_max = {{social_base_max}};
+        var social_base_min = {{social_base_min}};
+        var house_base_max = {{house_base_max}};
+        var house_base_mix = {{house_base_mix}};
+        var city_name = '{{city_name}}';
+    </script>
+    <script src="/js/salary.js"></script>
+    <link href="/css/sucks.css" rel="stylesheet">
+    <link href="/css/webM.css" rel="stylesheet">
+
+</head>
+<body>
+
+    <h2 class="calculator-title"><span class="nohidden">上海市</span>五险一金及税后工资计算器</h2>
+    <div class="clr">
+        <div id="origin_salary" class="lft">
+            <div class="input-group">
+                <span class="input-group-addon" id="spn1">税前：￥</span>
+                <input type="text" class="form-control" placeholder="税前金额" aria-describedby="spn1"
+                       id="input_origin_salary" maxlength="12">
+            </div>
+        </div>
+        <div class="rgt">
+            <input type="button" class="btn btn-danger" id="execute" onclick="calculate();" value="计算"/>
+        </div>
+    </div>
+
+    <div class="clr">
+        <div class="lft">
+            <div class="input-group">
+                <span class="input-group-addon" id="spn2">税后：</span>
+                <input type="text" class="form-control" placeholder="税后金额" id="final_salary"
+                       aria-describedby="final_salary" disabled="disabled" maxlength="12">
+            </div>
+        </div>
+    </div>
+
+    <div class="clr">
+        <input type="hidden" id="max_base_3j" value="17817">
+        <input type="hidden" id="min_base_3j" value="3563">
+        <input type="hidden" id="max_base_gjj" value="17817">
+        <input type="hidden" id="min_base_gjj" value="2020">
+        <input type="hidden" id="city" value="shanghai">
+        <fieldset>
+            <legend>更多选项：</legend>
+            <table class="options-table" style="table-layout:fixed;">
+                <tr>
+                    <td width="119px;">社保汇缴基数：</td>
+                    <td><input type="text" maxlength="12" class="form-control" style="width:80%;" id="input_base_social_security" /></td>
+                    <td style="text-align:center;">
+                        <label class="checkbox" for="cbx_social">
+                            <input type="checkbox" id="cbx_social"/>自定义</label></td>
+                </tr>
+                <tr>
+                    <td>公积金汇缴基数：</td>
+                    <td><input type="text" maxlength="12" class="form-control" style="width:80%;" id="input_base_house_fund" /></td>
+                    <td style="text-align:center;">
+                        <label class="checkbox" for="cbx_house">
+                        <input type="checkbox" id="cbx_house"/>自定义</label></td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" style="text-align:right;">
+                        <label class="checkbox" for="input_is_house_fund_ext">
+                            <input type="checkbox" id="input_is_house_fund_ext"/>汇缴补充住房公积金<span style="color:#666;">(非政策强制)</span></label>
+                    </td>
+                    <td>
+                        单位与个人汇缴比例：
+                        <select class="form-control" id="input_rate_house_fund_ext" disabled="disabled">
+                            <option value="0.01">1%</option>
+                            <option value="0.02">2%</option>
+                            <option value="0.03">3%</option>
+                            <option value="0.04">4%</option>
+                            <option value="0.05">5%</option>
+                            <option value="0.06">6%</option>
+                            <option value="0.07">7%</option>
+                            <option value="0.08" selected="selected">8%</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+
+    <div class="clr">
+    <table id="rt1" class="rt cf">       
+        <thead class="cf">
+            <tr>
+                <th style="width:37%">&nbsp;</th>
+                <th style="width:30%">个人应缴部分</th>
+                <th style="width:30%">单位应缴部分</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th>养老保险金：</th>
+            <td id="amt11">&nbsp;</td>
+            <td id="amt12">&nbsp;</td>
+        </tr>  
+        <tr>
+            <th>医疗保险金：</th>
+            <td id="amt21">&nbsp;</td>
+            <td id="amt22">&nbsp;</td>       
+        </tr>       
+        <tr>
+            <th>失业保险金：</th>
+            <td id="amt31">&nbsp;</td>
+            <td id="amt32">&nbsp;</td>
+        </tr>
+        <tr>
+            <th>基本住房公积金：</th>
+            <td id="amt41">&nbsp;</td>
+            <td id="amt42">&nbsp;</td>
+        </tr>        <tr>
+            <th>补充住房公积金：</th>
+            <td id="amt51">&nbsp;</td>
+            <td id="amt52">&nbsp;</td>
+        </tr>
+        <tr>
+            <th>工商保险金：</th>
+            <td id="amt61">&nbsp;</td>
+            <td id="amt62">&nbsp;</td>
+        </tr>
+        <tr>
+            <th>生育保险金：</th>
+            <td id="amt71">&nbsp;</td>
+            <td id="amt72">&nbsp;</td>
+        </tr>        <tr>
+            <th>共计支出：</th>
+            <td id="amtT1">&nbsp;</td>
+            <td id="amtT2">&nbsp;</td>
+        </tr>        <tr>
+            <th>扣除四金后月薪：</th>
+            <td id="amtA1">&nbsp;</td>
+            <td id="amtA2">&nbsp;</td>
+        </tr>
+        <tr>
+            <th>个人所得税：</th>
+            <td id="amtTx">&nbsp;</td>
+            <td id="amtTx2">&nbsp;</td>
+        </tr>
+        <tr>
+            <th>税后月薪：</th>
+            <td id="amtN">&nbsp;</td>
+            <td id="amtN2">&nbsp;</td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+<div id=adsenseCd>{% include "common/adsenseCdM.html" %}</div>
+{% include "footer.html" %}
+</body>
+</html>

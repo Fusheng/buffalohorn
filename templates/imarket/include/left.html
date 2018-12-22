@@ -1,0 +1,13 @@
+<div id="left">
+<!--
+<p><a class=mnu href="/imarket/tb?cmd=showTaobaokeItems">查询淘宝客商品</a>
+  -->
+{% block tbkSearchFilters %}{% endblock %}
+{% block recommandArticles %}
+<ul>
+{% for rcmAtl in rmdArticles %}
+<li class="rcmAtl"><a href="/topic/{{rcmAtl.article_id}}?key={{rcmAtl.article_key}}">{{rcmAtl.recommand_title}}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}
+</div>

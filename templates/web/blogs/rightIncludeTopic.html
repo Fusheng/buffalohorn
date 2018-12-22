@@ -1,0 +1,12 @@
+{% include "common/siteSearch.html" %}
+<br>
+{% include "common/share.html" %}
+<br><br>
+<div id=tags>
+	<ul>
+	{% for key, value in session.tags.items %}
+	<li><a href="/topic/{{key}}">{{key}}</a>&nbsp;({{value}})</li>
+	{% endfor %}
+	</ul>
+</div>
+<div id=taobaoke class=clear>{% include "common/taobaoke_promotion.html" %}</div>

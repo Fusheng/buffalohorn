@@ -1,0 +1,10 @@
+{% spaceless %}
+<div id="header">
+<div class=hL><a href="/imarket"><img src="/images/logo.png" title="三鸟网络科技"/></a></div>
+<div class=hR>
+{% for key, value in session.brands.items %}
+<a href="/channel/{{key}}" class=hra>{{value}}</a>
+{% endfor %}
+</div>
+</div>
+{% endspaceless %}
