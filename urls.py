@@ -18,6 +18,7 @@ urlpatterns += patterns('',
  (r'^data/bankSteelDailyTransactionVolume$', 'web.data.bank_steel_daily_transaction_volume'),
  (r'^data/bankSteelDailyTransactionData$', 'web.data.bank_steel_daily_transaction_data'),
  (r'^data/job/bsdtv', 'web.data.fetch_bank_steel_data_job'),
+ (r'^goog', 'web.g.g_view'),
 )
 
 #blog topic

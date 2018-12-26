@@ -1,6 +1,5 @@
 localhost init data
 -----------
-
 ```
 http://localhost:8080/test?cmd=initData
 ```
